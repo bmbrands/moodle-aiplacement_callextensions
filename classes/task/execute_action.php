@@ -57,7 +57,7 @@ class execute_action extends \core\task\adhoc_task {
             $action->set_progress_status(100, get_string('actionstatusfinished', 'aiplacement_callextensions'));
             $action->save();
         } catch (\Exception $e) {
-            mtrace("Action with id {$action->actionname}({$action->id}) could not be set to running: {$e->getMessage()}");
+            mtrace("Action with id {$action->get('actionname')}({$action->get('id')}) could not be set to running: {$e->getMessage()}");
             $action->set_progress_status(100, get_string('actionstatusfailed', 'aiplacement_callextensions'));
             $action->set('status', ai_action::STATUS_ERROR);
             $action->save();

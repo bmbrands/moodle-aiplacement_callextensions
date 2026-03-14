@@ -45,10 +45,10 @@ class extension extends base {
         if (
             !utils::preflight_checks_for_module(
                 $this->context,
+                $hook->renderer->get_page(),
                 'glossary',
                 ['mod/glossary:manageentries'],
                 ['mod-glossary-view'],
-                $hook->renderer->get_page(),
             )
         ) {
             return;
@@ -457,7 +457,7 @@ class extension extends base {
         $imageheight = $imageheight ?: 256;
 
         // Process each word.
-        $manager = new \core_ai\manager();
+        $manager = \core\di::get(\core_ai\manager::class);
         $glossarycm = get_coursemodule_from_id('glossary', $this->context->instanceid, 0, false, IGNORE_MISSING);
         $glossaryid = $glossarycm->instance;
         $totalwords = count($wordlist);
@@ -610,7 +610,32 @@ class extension extends base {
             'filepath' => '/',
             'filename' => $draftfile->get_filename(),
         ];
-        $imagefile = $fs->create_file_from_storedfile($fileinfo, $draftfile);
+
+        try {
+            $imagefile = $fs->create_file_from_storedfile($fileinfo, $draftfile);
+        } catch (\Exception $e) {
+            // If file already exists with same content, find and use the existing file
+            if (strpos($e->getMessage(), 'Duplicate entry') !== false) {
+                $existingfile = $fs->get_file(
+                    $fileinfo['contextid'],
+                    $fileinfo['component'],
+                    $fileinfo['filearea'],
+                    $fileinfo['itemid'],
+                    $fileinfo['filepath'],
+                    $fileinfo['filename']
+                );
+                if ($existingfile) {
+                    $imagefile = $existingfile;
+                } else {
+                    // Generate unique filename and try again
+                    $pathinfo = pathinfo($fileinfo['filename']);
+                    $fileinfo['filename'] = $pathinfo['filename'] . '_' . uniqid() . '.' . $pathinfo['extension'];
+                    $imagefile = $fs->create_file_from_storedfile($fileinfo, $draftfile);
+                }
+            } else {
+                throw $e;
+            }
+        }
 
         $url = moodle_url::make_pluginfile_url(
             $imagefile->get_contextid(),

@@ -66,9 +66,9 @@ class extension extends base {
     public function after_http_headers(after_http_headers $hook): void {
         if (!utils::preflight_checks_for_module(
             $this->context,
+            $hook->renderer->get_page(),
             'quiz', ['mod/quiz:manage'],
             ['mod-quiz-view'],
-            $hook->renderer->get_page(),
         )) {
             return;
         }
@@ -235,7 +235,7 @@ class extension extends base {
         }
         $params = $aiaction->get('actiondata') ?? [];
         $context = $params['qcontext'] ?? '';
-        $manager = new \core_ai\manager();
+        $manager = \core\di::get(\core_ai\manager::class);
         $currentindex = 0;
         $textprompt =
             $params['textprompt'] ?? get_string('quiz_generate_questions:textpromptdefault', 'aiplacement_callextensions');

@@ -40,6 +40,7 @@ $string['actiondialog:status'] = 'Status: {$a}';
 $string['actiondialog:title'] = 'AI Action : {$a}';
 $string['actionstatuscancelled'] = 'The action has been cancelled by the user.';
 $string['actionstatuserror'] = 'The action has failed with an error.';
+$string['actionstatusfailed'] = 'The action has failed.';
 $string['actionstatusfinished'] = 'The action has been completed successfully.';
 $string['actionstatusstarting'] = 'Starting...';
 $string['aiplacement/callextensions:use'] = 'Use AI Placement call extensions';
@@ -131,7 +132,7 @@ OUTPUT FORMAT
 Return the question in a GIFT format, suitable for import in Moodle.
 Examples of GIFT Format for different question types:
 ::Q1:: 1+1=2 {T}
-::Q2:: What\'s between orange and green in the spectrum? 
+::Q2:: What\'s between orange and green in the spectrum?
 { =yellow # right; good! ~red # wrong, it\'s yellow ~blue # wrong, it\'s yellow }
 ::Q3:: Two plus {=two =2} equals four.
 ::Q4:: Which animal eats which food? { =cat -> cat food =dog -> dog food }
@@ -152,3 +153,28 @@ RULES
 - Ensure the questions are relevant to the quiz title and appropriate for the specified difficulty level.
 - Do not use the same question reptitively ensuring variety in the questions generated.';
 $string['quiz_generate_questions:voicetext'] = 'Voice for sound generation';
+
+// Call language resources generation strings.
+$string['action:call_generate_language_resources'] = 'Generate language resources';
+$string['call_generate_language_resources'] = 'Generate language resources with translations, images and audio';
+$string['call_generate_language_resources:wordlist'] = 'Word list';
+$string['call_generate_language_resources:wordlist_help'] = 'Enter words or phrases, one per line, for which to generate language resources.';
+$string['call_generate_language_resources:language'] = 'Target language';
+$string['call_generate_language_resources:language_help'] = 'The language into which words should be translated.';
+$string['call_generate_language_resources:textpromptheader'] = 'Text Generation Settings';
+$string['call_generate_language_resources:textprompt'] = 'Translation prompt';
+$string['call_generate_language_resources:textpromptdefault'] = 'Translate the word "{word}" into {language}. Provide only the translation.';
+$string['call_generate_language_resources:imagepromptheader'] = 'Image Generation Settings';
+$string['call_generate_language_resources:imageprompt'] = 'Image prompt';
+$string['call_generate_language_resources:imagepromptdefault'] = 'Create a clear, schoolbook illustration representing a "{word}".';
+$string['call_generate_language_resources:imagesize'] = 'Image size';
+$string['call_generate_language_resources:audioparamheader'] = 'Audio Generation Settings';
+$string['call_generate_language_resources:voice'] = 'Voice';
+$string['call_generate_language_resources:emptywordlist'] = 'Word list cannot be empty.';
+$string['call_generate_language_resources:novalidwords'] = 'No valid words found in the word list.';
+$string['call_generate_language_resources:started'] = 'Language resources generation has been started.';
+$string['call_generate_language_resources:nodata'] = 'No data provided for processing.';
+$string['call_generate_language_resources:unknownaction'] = 'Unknown action requested.';
+$string['call_generate_language_resources:summary'] = 'Generating {$a->count} language resources in {$a->language} for: {$a->words}';
+$string['call_generate_language_resources:processing'] = 'Processing word: {$a}';
+$string['call_generate_language_resources:completed'] = 'Language resources generation completed';

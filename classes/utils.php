@@ -57,6 +57,7 @@ class utils {
      * Get the assist UI instance.
      *
      * @param \context $context The context for which the assist UI is being requested.
+     * @param moodle_page $page The current moodle page.
      * @param string $modulename
      * @param array $capabilities The capabilities required to use the assist UI.
      * @param string $currentpagelayout The current page layout.
@@ -64,10 +65,10 @@ class utils {
      */
     public static function preflight_checks_for_module(
         \context $context,
+        moodle_page $page,
         string $modulename,
         array $capabilities,
         array $pagetypeallowed = ['mod-*'],
-        moodle_page $page,
     ): bool {
         $cm = get_coursemodule_from_id(
             $modulename,
